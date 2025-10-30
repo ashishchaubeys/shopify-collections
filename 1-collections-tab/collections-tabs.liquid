@@ -1,0 +1,474 @@
+{% comment %}
+  Section: Collection Tabs with Products + Slider
+{% endcomment %}
+    <style>
+        /* collection tabs section */
+        .collection-tabs-section,
+        .collections-slider-section {
+            margin: 0 !important;
+            max-width: 100%;
+            padding: 60px 0 !important;
+            background: #f4f6f9;
+        }
+
+        .collection-tabs-section .collection-header,
+        .collections-slider-section .collection-header,
+        .popular-section .collection-header,
+        .popular-swiper {
+            max-width: 1500px;
+            padding: 0 15px !important;
+            margin: 0 auto;
+        }
+
+        .collection-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .collection-arrows {
+            display: flex;
+            gap: 10px;
+            margin-left: auto;
+        }
+
+        .collection-tabs-section {
+            margin: 40px 0;
+        }
+
+        .collection-tabs-section .section-heading,
+        .collections-slider-section .section-heading,
+        .popular-section .section-heading {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 0 0 20px;
+        }
+
+        .collection-tabs-section .tabs {
+            max-width: 1500px;
+            margin: 0 auto 30px;
+            padding: 0 15px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .collection-tabs-section .tab-button {
+            padding: 10px 30px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            background: #fff;
+            border-radius: 35px;
+            font-weight: 500;
+            font-family: 'Rubik', sans-serif;
+            min-height: 35px;
+            min-width: 140px;
+            transition: all 0.3s ease;
+        }
+
+        .collection-tabs-section .tab-button.active {
+            color: #e31239;
+            border-color: #e31239;
+            border-width: 2px;
+        }
+
+        .collection-tabs-section .tab-content {
+            display: none;
+        }
+
+        .collection-tabs-section .tab-content.active {
+            display: block;
+        }
+
+        .collection-tabs-section .product-card {
+            border: 1px solid rgb(230, 232, 235);
+            padding: 0;
+            border-radius: 5px;
+            background: #fff;
+            cursor: pointer;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .collection-tabs-section .product-card a {
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .collection-tabs-section .product-card a *:not(img) {
+            padding: 0 20px;
+            margin: 0;
+        }
+
+        .collection-tabs-section .product-card img {
+            max-width: 100%;
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: contain;
+            display: block;
+            transform: scale(1);
+            transition: 0.3s linear;
+        }
+
+        .product-card_img {
+            overflow: hidden;
+            padding: 0 !important;
+            aspect-ratio: 1;
+            margin-bottom: 20px !important;
+        }
+
+        .collection-tabs-section .product-card:hover img {
+            transform: scale(1.03);
+        }
+
+        .collection-tabs-section .product-card a h3 {
+            font-size: 14px !important;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #000;
+            transition: 0.3s linear;
+        }
+
+        .collection-tabs-section .product-card:hover a h3 {
+            color: #e31239;
+        }
+
+        .collection-tabs-section .product-card a span {
+            font-size: 16px;
+            color: #000;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 20px !important;
+            margin-top: auto;
+        }
+
+        .badge.top {
+            top: 10px;
+            left: 10px;
+        }
+
+        .badge--sale {
+            border: 1px solid transparent;
+            border-radius: .4rem;
+            display: inline-block !important;
+            font-size: 16px ! important;
+            font-weight: 500 !important;
+            line-height: 1;
+            padding: .4rem 1.3rem !important;
+            text-align: center;
+            background-color: #000;
+            border-color: #000;
+            color: #fff !important;
+            word-break: break-word;
+            position: absolute;
+        }
+
+        .collection-tabs-section .tab-content .swiper-slide,
+        .collections-slider-section .swiper-slide {
+            width: 290px;
+            height: auto;
+        }
+
+        .collection-tabs-section .tab-content .swiper-slide:first-child,
+        .collections-slider-section .swiper-slide:first-child {
+            --desktop-margin-left-first-item: max(1.5rem, calc((100vw - var(--page-width) + 5rem - var(--grid-desktop-horizontal-spacing)) / 2) - 20px);
+            margin-left: var(--desktop-margin-left-first-item);
+            scroll-margin-left: var(--desktop-margin-left-first-item);
+        }
+
+        .collection-tabs-section .tab-content .swiper-wrapper {
+            padding-bottom: 5px;
+        }
+
+        /* ==================== SWIPER NAVIGATION ARROWS ==================== */
+        .swiper-button-prev,
+        .swiper-button-next {
+            width: 35px !important;
+            height: 35px !important;
+            border-radius: 50% !important;
+            background: #fff !important;
+            border: 1px solid #ddd !important;
+            color: #111 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            opacity: 1 !important;
+            transition: all 0.3s ease !important;
+            font-family: 'swiper-icons', sans-serif !important;
+            position: static !important;
+            margin: 0 !important;
+            z-index: 2 !important;
+        }
+
+        .swiper-button-prev::after,
+        .swiper-button-next::after {
+            font-size: 12px !important;
+            font-weight: bold !important;
+        }
+
+        /* Arrow Icons - REQUIRED */
+        .swiper-button-prev::after {
+            content: 'prev';
+        }
+
+        .swiper-button-next::after {
+            content: 'next';
+        }
+
+        /* Enabled State */
+        .swiper-button-prev[aria-disabled="false"],
+        .swiper-button-next[aria-disabled="false"] {
+            background: #e31239 !important;
+            border-color: #e31239 !important;
+            color: #fff !important;
+            cursor: pointer !important;
+            /* <-- THIS IS THE FIX */
+        }
+
+        /* Disabled State */
+        .swiper-button-prev[aria-disabled="true"],
+        .swiper-button-next[aria-disabled="true"] {
+            opacity: 0.5;
+            cursor: not-allowed !important;
+        }
+
+        /* Mobile Arrows Fix */
+        @media (max-width: 767px) {
+            .collection-tabs-section .tabs .collection-arrows {
+                position: absolute;
+                right: 15px;
+                top: -45px;
+                display: flex !important;
+            }
+
+            .collection-tabs-section .tab-content .swiper-slide,
+            .collections-slider-section .swiper-slide {
+                width: 250px;
+            }
+        }
+
+        @media (max-width: 989px) {
+
+            .collection-tabs-section .section-heading,
+            .collections-slider-section .section-heading,
+            .popular-section .section-heading {
+                font-size: 24px !important;
+            }
+
+            .collection-tabs-section,
+            .collections-slider-section {
+                padding: 30px 0 !important;
+            }
+        }
+
+        /* Swiper Core Styles */
+        :root {
+            --swiper-theme-color: #007aff;
+        }
+
+        .swiper {
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            overflow: hidden;
+            list-style: none;
+            padding: 0;
+            z-index: 1;
+            display: block;
+        }
+
+        .swiper-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            display: flex;
+            transition-property: transform;
+            box-sizing: content-box;
+        }
+
+        .swiper-slide {
+            flex-shrink: 0;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transition-property: transform;
+            display: block;
+        }
+
+        /* Icon Font */
+        @font-face {
+            font-family: 'swiper-icons';
+            src: url('data:application/font-woff;charset=utf-8;base64,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') format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
+    </style>
+
+<div class="collection-tabs-section page-width">
+  {% if section.settings.heading != blank %}
+    <div class="collection-header">
+      <h2 class="section-heading">{{ section.settings.heading }}</h2>
+    </div>
+  {% endif %}
+
+  <div class="tabs">
+    {% for block in section.blocks %}
+      {% assign collection = collections[block.settings.collection] %}
+      {% if collection %}
+        <button
+          class="tab-button {% if forloop.first %}active{% endif %}"
+          data-tab="tab-{{ collection.handle }}"
+        >
+          {{ collection.title }}
+        </button>
+      {% endif %}
+    {% endfor %}
+    <!-- Arrows moved here -->
+    <div class="collection-arrows">
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
+  </div>
+
+  <div class="tabs-content">
+    {% for block in section.blocks %}
+      {% assign collection = collections[block.settings.collection] %}
+      {% if collection and collection.products_count > 0 %}
+        <div
+          id="tab-{{ collection.handle }}"
+          class="tab-content {% if forloop.first %}active{% endif %}"
+        >
+          <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+              {% for product in collection.products limit: 12 %}
+                <div class="swiper-slide">
+                  <div class="product-card">
+                    <a href="{{ product.url }}">
+                      <div class="product-card_img">
+                        <img src="{{ product.featured_image | img_url: '360x360' }}" alt="{{ product.title }}">
+                      </div>
+                      <!-- Sale + Sold Out Badge -->
+                      {%if product.available == false %}
+                        <span class="badge badge--souldout top">
+                          {{ 'products.product.sold_out' | t }}
+                        </span>
+                        {%elsif product.compare_at_price > product.price and product.available %}
+                          <span class="badge badge--sale top">
+                          {{ 'products.product.on_sale' | t }}
+                        </span>
+                      {% endif %}  
+                      <!-- Sale + Sold Out Badge -->
+                      <h3>{{ product.title }}</h3>
+                      {% if product.price_varies %}
+                        <span>{{ product.price_min | money }} - {{ product.price_max | money }}</span>
+                      {% else %}
+                        <span>{{ product.price | money }}</span>
+                      {% endif %}
+                    </a>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Swiper CSS -->
+{% comment %} <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" /> {% endcomment %}
+
+<!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.collection-tabs-section').forEach(function (section) {
+                const buttons = section.querySelectorAll('.tab-button');
+                const contents = section.querySelectorAll('.tab-content');
+                const arrowsWrapper = section.querySelector('.collection-arrows');
+                const nextBtn = arrowsWrapper ? arrowsWrapper.querySelector('.swiper-button-next') : null;
+                const prevBtn = arrowsWrapper ? arrowsWrapper.querySelector('.swiper-button-prev') : null;
+
+                section._activeSwiper = null;
+
+                function activateTab(btn) {
+                    buttons.forEach(b => b.classList.remove('active'));
+                    contents.forEach(c => c.classList.remove('active'));
+
+                    btn.classList.add('active');
+                    const tabId = btn.dataset.tab;
+                    const tabEl = section.querySelector('#' + tabId);
+                    if (tabEl) tabEl.classList.add('active');
+
+                    if (section._activeSwiper) {
+                        try { section._activeSwiper.destroy(true, true); } catch (e) { }
+                        section._activeSwiper = null;
+                    }
+
+                    const swiperEl = tabEl.querySelector('.mySwiper');
+                    if (swiperEl && nextBtn && prevBtn) {
+                        section._activeSwiper = new Swiper(swiperEl, {
+                            slidesPerView: 'auto',
+                            spaceBetween: 10,
+                            navigation: {
+                                nextEl: nextBtn,
+                                prevEl: prevBtn,
+                            },
+                            breakpoints: {
+                                990: { spaceBetween: 20 },
+                            },
+                            observer: true,
+                            observeParents: true,
+                        });
+
+                        section._activeSwiper.navigation.update();
+                    }
+                }
+
+                buttons.forEach(btn => btn.addEventListener('click', () => activateTab(btn)));
+
+                const initialBtn = section.querySelector('.tab-button.active') || buttons[0];
+                if (initialBtn) activateTab(initialBtn);
+            });
+        });
+    </script>
+
+{% schema %}
+{
+  "name": "Collection Tabs",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "New Arrival"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection Tab",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Choose collection"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Collection Tabs",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
