@@ -1,3 +1,3 @@
 # Collection Tabs
 
-![demo](Demo/2-collections-tab.gif)
+![demo](2-collections-tab.gif)
